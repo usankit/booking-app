@@ -1,0 +1,71 @@
+<div class="container mt-3">
+  <div class="main-div mb-4">
+    <form>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="source">Source (From)</label>
+            <input type="text" class="form-control custom-input" id="source" name="source" #sourceInput placeholder="Enter Source"
+              (input)="filterData(sourceInput.value, destinationInput.value, dateInput.value)">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="destination">Destination (To)</label>
+            <input type="text" class="form-control custom-input" id="destination" name="destination" #destinationInput placeholder="Enter Destination"
+              (input)="filterData(sourceInput.value, destinationInput.value, dateInput.value)">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" class="form-control custom-input" id="date" name="date" #dateInput
+              (input)="filterData(sourceInput.value, destinationInput.value, dateInput.value)">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped custom-table">
+      <thead class="thead-dark">
+        <tr>
+          <th>
+            <select name="airlines" id="airlines" class="form-control custom-select" (change)="AirlineData($event)">
+                <option value="" disabled selected>Select Airline</option>
+                <option *ngFor="let airline of uniqueAirlines" [value]="airline">{{ airline }}</option>
+            </select><br>
+            Airline
+          </th>
+          <th>Flight Number</th>
+          <th>
+            <select name="aircrafts" id="aircrafts" class="form-control custom-select" (change)="AircraftData($event)">
+              <option value="" disabled selected> Flight Class</option>
+              <option *ngFor="let aircraft of uniqueAircraft" [value]="aircraft">{{ aircraft }}</option>
+          </select><br>
+            Aircraft</th>
+          <th>Source</th>
+          <th>Destination</th>
+          <th>Date</th>
+          <th>Duration</th>
+          <th >Price <i class="bi bi-arrow-down-up" (click)="sortData('price')"></i></th>
+          <th>Seats Available</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of sortedData">
+          <td>{{ item.airline }}</td>
+          <td>{{ item.flightNumber }}</td>
+          <td>{{ item.aircraft }}</td>
+          <td>{{ item.origin }} <br> {{item.departureTime | date:'shortTime'}}</td>
+          <td>{{ item.destination }} <br> {{item.arrivalTime | date:'shortTime'}}</td>
+          <td>{{ item.departureTime | date:'yyyy-MM-dd' }}</td>
+          <td>{{ item.duration }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.seatsAvailable }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
